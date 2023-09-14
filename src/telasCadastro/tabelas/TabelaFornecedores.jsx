@@ -1,14 +1,13 @@
 import { Button, Container, Table, Row, Col } from "react-bootstrap";
 
-export default function TabelaFornecedor({alternar, home}) {
+export default function TabelaFornecedor(props) {
     return (
         <Container>
             <Row>
                 <Col md={6} offset={5}>
-                    <Button type="submit" variant={"primary"} onClick={alternar}>Novo Fornecedor</Button>
-                </Col>
-                <Col md={6} offset={5}>
-                    <Button type="button" variant={"secondary"} onClick={home}>Voltar</Button>
+                    <Button type="submit" variant={"primary"} onClick={()=>{
+                        props.exibirFormulario(true)
+                    }}>Novo Fornecedor</Button>
                 </Col>
             </Row>
             <Table striped bordered hover>

@@ -1,6 +1,6 @@
 import { Button, Container, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 
-export default function FormCadFornecedor({alternar, home}){
+export default function FormCadFornecedor(props){
     return(
         <Container>
             <Form>
@@ -138,10 +138,9 @@ export default function FormCadFornecedor({alternar, home}){
                         <Button type="submit" variant={"primary"}>Cadastrar</Button>
                     </Col>
                     <Col md={4} offset={5}>
-                        <Button type="button" variant={"dark"} onClick={alternar}>Tabela</Button>
-                    </Col>
-                    <Col md={4} offset={5}>
-                        <Button type="button" variant={"secondary"} onClick={home}>Voltar</Button>
+                        <Button type="button" variant={"dark"} onClick={()=>{
+                            props.exibirFormulario(false)
+                        }}>Fornecedores</Button>
                     </Col>
                 </Row>
             </Form>

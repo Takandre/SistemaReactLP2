@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Container, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 
-export default function FormCadCliente({alternar, home}) {
+export default function FormCadCliente(props) {
     //atributos deste objeto devem estar associados aos inputs do formulário.
     const estadoInicialCliente = {
         cpf:'',
@@ -14,7 +14,8 @@ export default function FormCadCliente({alternar, home}) {
         cep:'',
     }
     const [cliente, setCliente]= useState(estadoInicialCliente);
-
+    const [formValidado, setFormValidado] = useState(false);
+    let listaCli = [];
 
     //e de elemento
     function manipularMudancas(e){
@@ -22,13 +23,15 @@ export default function FormCadCliente({alternar, home}) {
         setCliente({...cliente,[componente.name]:componente.value});
     }
 
-    const [formValidado, setFormValidado] = useState(false)
-
     function manipularSubmissao(e){
         const form = e.currentTarget;
+        console.log(cliente);
         if(form.checkValidity()){
             //todos os campos preenchidos
             // mandar dados para backend
+            listaCli.push(cliente);
+            props.listaCliente(listaCli);
+            console.log(listaCli);
             //limpar formulário
             
             //reiniciar o estado do componente
@@ -45,24 +48,23 @@ export default function FormCadCliente({alternar, home}) {
 
     return (
         <Container>
-            <Form novalidate validated={formValidado} onSubmit={manipularSubmissao}>
+            <Form noValidate validated={formValidado} onSubmit={manipularSubmissao}>
                 <Row>
                     <Col>
                         <Form.Group>
                             <FloatingLabel
-                                controlId="floatingInput"
                                 label="CPF:"
                                 className="mb-3"
                             >
 
                                 <Form.Control 
-                                type="text"
-                                placeholder="000.000.000-00"
-                                id="cpf"
-                                name="cpf"
-                                value={cliente.cpf}
-                                onChange={manipularMudancas}
-                                required />
+                                    type="text"
+                                    placeholder="000.000.000-00"
+                                    id="cpf"
+                                    name="cpf"
+                                    value={cliente.cpf}
+                                    onChange={manipularMudancas}
+                                    required />
                             </FloatingLabel>
                             <Form.Control.Feedback type="invalid">Informe o cpf!</Form.Control.Feedback>
                         </Form.Group>
@@ -72,18 +74,17 @@ export default function FormCadCliente({alternar, home}) {
                     <Col>
                         <Form.Group>
                             <FloatingLabel
-                                controlId="floatingInput"
                                 label="Nome Completo:"
                                 className="mb-3"
                             >
                                 <Form.Control 
-                                type="text"
-                                placeholder="Informe o nome completo"
-                                id="nome"
-                                name="nome"
-                                value={cliente.nome}
-                                onChange={manipularMudancas}
-                                required />
+                                    type="text"
+                                    placeholder="Informe o nome completo"
+                                    id="nome"
+                                    name="nome"
+                                    value={cliente.nome}
+                                    onChange={manipularMudancas}
+                                    required />
                             </FloatingLabel>
                             <Form.Control.Feedback type="invalid">Informe o nome!</Form.Control.Feedback>
                         </Form.Group>
@@ -93,7 +94,6 @@ export default function FormCadCliente({alternar, home}) {
                     <Col md={10}>
                         <Form.Group>
                             <FloatingLabel
-                                controlId="floatingInput"
                                 label="Endereço:"
                                 className="mb-3"
                             >
@@ -113,19 +113,18 @@ export default function FormCadCliente({alternar, home}) {
                     <Col md={2}>
                         <Form.Group>
                             <FloatingLabel
-                                controlId="floatingInput"
                                 label="Número"
                                 className="mb-3"
                             >
                                 <Form.Control
-                                type="text"
-                                placeholder="Nº"
-                                id="numero"
-                                name="numero"
-                                value={cliente.numero}
-                                onChange={manipularMudancas}
-                                required
-                                />
+                                    type="text"
+                                    placeholder="Nº"
+                                    id="numero"
+                                    name="numero"
+                                    onChange={manipularMudancas}
+                                    value={cliente.numero}
+                                    required
+                                    />
                             </FloatingLabel>
                             <Form.Control.Feedback type="invalid">Informe o número!</Form.Control.Feedback>
                         </Form.Group>
@@ -135,19 +134,18 @@ export default function FormCadCliente({alternar, home}) {
                     <Col md={4}>
                         <Form.Group>
                             <FloatingLabel
-                                controlId="floatingInput"
                                 label="Bairro:"
                                 className="mb-3"
                             >
                                 <Form.Control
-                                type="text"
-                                placeholder="Bairro/Vila..."
-                                id="bairro"
-                                name="bairro"
-                                value={cliente.bairro}
-                                onChange={manipularMudancas}
-                                required
-                                />
+                                    type="text"
+                                    placeholder="Bairro/Vila..."
+                                    id="bairro"
+                                    name="bairro"
+                                    value={cliente.bairro}
+                                    onChange={manipularMudancas}
+                                    required
+                                    />
                             </FloatingLabel>
                             <Form.Control.Feedback type="invalid">Informe o bairro!</Form.Control.Feedback>
                         </Form.Group>
@@ -155,29 +153,31 @@ export default function FormCadCliente({alternar, home}) {
                     <Col md={5}>
                         <Form.Group>
                             <FloatingLabel
-                                controlId="floatingInput"
                                 label="Cidade"
                                 className="mb-3"
                             >
                                 <Form.Control
-                                type="text"
-                                placeholder="Cidade"
-                                id="cidade"
-                                name="cidade"
-                                value={cliente.cidade}
-                                onChange={manipularMudancas}
-                                required
-                                />
+                                    type="text"
+                                    placeholder="Cidade"
+                                    id="cidade"
+                                    name="cidade"
+                                    value={cliente.cidade}
+                                    onChange={manipularMudancas}
+                                    required
+                                    />
                             </FloatingLabel>
                             <Form.Control.Feedback type="invalid">Informe a cidade!</Form.Control.Feedback>
                         </Form.Group>
                     </Col>
                     <Col md={3}>
-                        <FloatingLabel controlId="floatingSelect" label="UF:" 
-                        value={cliente.uf} 
-                        onChange={manipularMudancas}>
-                            <Form.Select aria-label="Unidades Federativas brasileiras">
-                                <option value="SP" selected>São Paulo</option>
+                        <FloatingLabel label="UF:">
+                            <Form.Select 
+                                aria-label="Unidades Federativas brasileiras"
+                                id='uf'
+                                name='uf'
+                                onChange={manipularMudancas}
+                                value={cliente.uf}
+                                required>
                                 <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AP">Amapá</option>
@@ -202,6 +202,7 @@ export default function FormCadCliente({alternar, home}) {
                                 <option value="RO">Rondônia</option>
                                 <option value="RR">Roraima</option>
                                 <option value="SC">Santa Catarina</option>
+                                <option value="SP" selected>São Paulo</option>
                                 <option value="SE">Sergipe</option>
                                 <option value="TO">Tocantins</option>
                             </Form.Select>
@@ -212,18 +213,18 @@ export default function FormCadCliente({alternar, home}) {
                     <Col md={4}>
                         <Form.Group>
                             <FloatingLabel
-                                controlId="floatingInput"
                                 label="CEP:"
                                 className="mb-3"
                             >
-                                <Form.Control type="text"
-                                placeholder="cep"
-                                id="cep"
-                                name="cep"
-                                value={cliente.cep}
-                                onChange={manipularMudancas}
-                                required
-                                />
+                                <Form.Control 
+                                    type="text"
+                                    placeholder="cep"
+                                    id="cep"
+                                    name="cep"
+                                    onChange={manipularMudancas}
+                                    value={cliente.cep} 
+                                    required
+                                    />
                             </FloatingLabel>
                             <Form.Control.Feedback type="invalid">Informe o cep!</Form.Control.Feedback>
                         </Form.Group>
@@ -234,10 +235,10 @@ export default function FormCadCliente({alternar, home}) {
                         <Button type="submit" variant={"primary"}>Cadastrar</Button>
                     </Col>
                     <Col md={4} offset={5}>
-                        <Button type="button" variant={"dark"} onClick={alternar}>Tabela</Button>
-                    </Col>
-                    <Col md={4} offset={5}>
-                        <Button type="button" variant={"secondary"} onClick={home}>Voltar</Button>
+                        <Button type="button" variant={"dark"} onClick={()=>{
+                            props.exibirFormulario(false)
+                            }
+                        }>Clientes</Button>
                     </Col>
                 </Row>
             </Form>
