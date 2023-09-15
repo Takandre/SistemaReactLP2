@@ -3,19 +3,9 @@ import { Button, Container, Form, Row, Col, FloatingLabel } from "react-bootstra
 
 export default function FormCadCliente(props) {
     //atributos deste objeto devem estar associados aos inputs do formulário.
-    const estadoInicialCliente = {
-        cpf:'',
-        nome:'',
-        endereco:'',
-        numero:'',
-        bairro:'',
-        cidade:'',
-        uf:'SP',
-        cep:'',
-    }
+    const estadoInicialCliente = props.clienteParaEdicao;
     const [cliente, setCliente]= useState(estadoInicialCliente);
     const [formValidado, setFormValidado] = useState(false);
-    let listaCli = [];
 
     //e de elemento
     function manipularMudancas(e){
@@ -25,15 +15,26 @@ export default function FormCadCliente(props) {
 
     function manipularSubmissao(e){
         const form = e.currentTarget;
-        console.log(cliente);
         if(form.checkValidity()){
             //todos os campos preenchidos
             // mandar dados para backend
-            listaCli.push(cliente);
-            props.listaCliente(listaCli);
-            console.log(listaCli);
-            //limpar formulário
-            
+            if(!props.modoEdicao){
+                props.setListaCliente([...props.listaCliente,cliente]);
+            }
+            else{
+                props.setListaCliente([...props.listaCliente.filter((itemCliente)=>itemCliente.cpf !==cliente.cpf),cliente]);
+                props.setModoEdicao(false);
+                props.setClienteParaEdicao({
+                    cpf:'',
+                    nome:'',
+                    endereco:'',
+                    numero:'',
+                    bairro:'',
+                    cidade:'',
+                    uf:'SP',
+                    cep:'',
+                });
+            }
             //reiniciar o estado do componente
             setCliente(estadoInicialCliente);
             setFormValidado(false);
@@ -232,7 +233,7 @@ export default function FormCadCliente(props) {
                 </Row>
                 <Row>
                     <Col md={4} offset={5}>
-                        <Button type="submit" variant={"primary"}>Cadastrar</Button>
+                        <Button type="submit" variant={"primary"}>{props.modoEdicao ? "Alterar":"Cadastrar"}</Button>
                     </Col>
                     <Col md={4} offset={5}>
                         <Button type="button" variant={"dark"} onClick={()=>{
