@@ -1,8 +1,7 @@
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
 export default function Menu(props) {
-    // "to" deve apontar para uma das rotas
+    //a propriedade "to" do componente Link deve apontar para um path em Routes
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container>
