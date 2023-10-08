@@ -6,13 +6,37 @@ import { useState } from "react";
 
 export default function TelaCadastroProduto(props) {
     const [exibirFormulario, setExibirFormulario] = useState(false);
+    const [listaProduto, setListaProduto] = useState([]);
+    const [produtoParaEdicao, setProdutoParaEdicao] = useState({
+        codigo:'',
+        nome:'',
+        categoria:'',
+        estoque:'',
+        precoCompra:'',
+        precoVenda:''
+    });
+    const [modoEdicao, setModoEdicao] = useState(false);
     return (
         <Container>
             <Pagina>
                 {
-                    //dinâmica em que o usuário irá alternar entre o formulário de cadastro
-                    //e a visualização do registros já cadastrados.
-                    exibirFormulario ? <FormCadProduto /> : <TabelaProdutos />
+                    exibirFormulario ? <FormCadProduto exibirFormulario={setExibirFormulario}
+                                                       listaProduto={listaProduto}
+                                                       setListaProduto={setListaProduto}
+                                                       produtoParaEdicao={produtoParaEdicao}
+                                                       setProdutoParaEdicao={setProdutoParaEdicao}
+                                                       modoEdicao={modoEdicao}
+                                                       setModoEdicao={setModoEdicao}
+                                        /> 
+                                        : 
+                                       <TabelaProdutos exibirFormulario={setExibirFormulario}
+                                                       listaProduto={listaProduto}
+                                                       setListaProduto={setListaProduto}
+                                                       produtoParaEdicao={produtoParaEdicao}
+                                                       setProdutoParaEdicao={setProdutoParaEdicao}
+                                                       modoEdicao={modoEdicao}
+                                                       setModoEdicao={setModoEdicao}
+                                        />
                 }
             </Pagina>
         </Container>

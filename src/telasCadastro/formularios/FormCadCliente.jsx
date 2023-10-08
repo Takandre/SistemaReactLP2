@@ -57,7 +57,7 @@ export default function FormCadCliente(props) {
                             <FloatingLabel
                                 label="CPF:"
                                 className="mb-3"
-                            >
+                                >
 
                                 <Form.Control 
                                     type="text" 
@@ -228,7 +228,7 @@ export default function FormCadCliente(props) {
                                     required
                                     />
                             </FloatingLabel>
-                            <Form.Control.Feedback type="invalid">Informe o bairro!</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">Informe o CEP!</Form.Control.Feedback>
                         </Form.Group>
                     </Col>
                 </Row>

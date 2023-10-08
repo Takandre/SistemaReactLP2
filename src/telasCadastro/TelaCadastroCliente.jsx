@@ -17,7 +17,7 @@ export default function TelaCadastroCliente(props) {
         uf:'SP',
         cep:''
     });
-    const [modoEdicao, setModoEdicao] = useState(false);
+    const [modoEdicao, setModoEdicao] = useState(false);    
     
     return (
         <Container>
